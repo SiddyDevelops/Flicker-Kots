@@ -48,6 +48,7 @@ class GetRawData : AsyncTask<String, Void, String>() {
 
     override fun onPostExecute(result: String?) {
         super.onPostExecute(result)
+        Log.d(TAG, "onPostExecute called, parameter is $result")
     }
 
 }
