@@ -1,23 +1,41 @@
 package com.siddydevelops.flicker_kots
 
+import android.location.Criteria
+import android.net.Uri
+import android.nfc.NdefRecord.createUri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import java.lang.Exception
 
 class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete, GetFlickerJSONData.OnDataAvailable {
+
+    companion object {
+        private val TAG = "MainActivity"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val url = createUri("https://api.flickr.com/services/feeds/photos_public.gne", "android,oreo","en-us", true)
+
         val getRawData = GetRawData(this)
         //getRawData.setDownloadCompleteListener(this)
-        getRawData.execute("https://api.flickr.com/services/feeds/photos_public.gne?tags=android,oreo&format=json&nojsoncallback=1")
+        getRawData.execute(url)
 
     }
 
-    companion object {
-        private val TAG = "MainActivity"
+    private fun createUri(baseUrl: String, searchCriteria: String, lang: String, matchAll: Boolean): String {
+        Log.d(TAG, "createUri starts")
+        val uri = Uri.parse(baseUrl).buildUpon()
+            .appendQueryParameter("tags", searchCriteria)
+            .appendQueryParameter("tagmode", if(matchAll) "ALL" else "ANY")
+            .appendQueryParameter("lang", lang)
+            .appendQueryParameter("format", "json")
+            .appendQueryParameter("nojsoncallback", "1").build()
+
+        return uri.toString()
     }
 
     override fun onDownloadComplete(data: String, status: DownloadStatus) {
