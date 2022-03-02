@@ -22,7 +22,7 @@ class FlickerRecyclerViewAdapter(private var photoList : List<Photo>) : Recycler
     }
 
     override fun onBindViewHolder(holder: FlickerImageViewHolder, position: Int) {
-        TODO("Not yet implemented")
+
     }
 
     override fun getItemCount(): Int {
