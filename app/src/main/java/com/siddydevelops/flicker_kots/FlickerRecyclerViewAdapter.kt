@@ -1,11 +1,13 @@
 package com.siddydevelops.flicker_kots
 
+import android.icu.number.NumberFormatter.with
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 
 class FlickerImageViewHolder(view: View) : RecyclerView.ViewHolder(view)
 {
@@ -22,7 +24,9 @@ class FlickerRecyclerViewAdapter(private var photoList : List<Photo>) : Recycler
     }
 
     override fun onBindViewHolder(holder: FlickerImageViewHolder, position: Int) {
-
+        val photoItem = photoList[position]
+        Picasso.get().load(photoItem.image).error(R.drawable.baseline_image_black_48dp).placeholder(R.drawable.baseline_image_black_48dp).into(holder.thumbnail)
+        holder.title.text = photoItem.title
     }
 
     override fun getItemCount(): Int {
