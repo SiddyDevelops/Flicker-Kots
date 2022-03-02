@@ -33,7 +33,7 @@ class FlickerRecyclerViewAdapter(private var photoList : List<Photo>) : Recycler
         return if(photoList.isNotEmpty()) photoList.size else 0
     }
 
-    fun downloadData(newPhotos:List<Photo>) {
+    fun loadNewData(newPhotos:List<Photo>) {
         photoList = newPhotos
         notifyDataSetChanged()
     }

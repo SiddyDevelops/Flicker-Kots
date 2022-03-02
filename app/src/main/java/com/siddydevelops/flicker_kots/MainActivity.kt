@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.content_main.*
 import java.lang.Exception
 
 class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete, GetFlickerJSONData.OnDataAvailable {
@@ -16,11 +18,16 @@ class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete, GetFlic
         private val TAG = "MainActivity"
     }
 
+    private val flickerRVAdapter = FlickerRecyclerViewAdapter(ArrayList())
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val url = createUri("https://api.flickr.com/services/feeds/photos_public.gne", "android,oreo","en-us", true)
+        recycler_view.layoutManager = LinearLayoutManager(this)
+        recycler_view.adapter = flickerRVAdapter
+
+        val url = createUri("https://api.flickr.com/services/feeds/photos_public.gne", "android","en-us", true)
 
         val getRawData = GetRawData(this)
         //getRawData.setDownloadCompleteListener(this)
@@ -69,7 +76,8 @@ class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete, GetFlic
     }
 
     override fun onDataAvailable(data: List<Photo>) {
-        Log.d(TAG, "onDataAvailable called, data is $data")
+        Log.d(TAG, "onDataAvailable called")
+        flickerRVAdapter.loadNewData(data)
         Log.d(TAG, "onDataAvailable end")
     }
 
