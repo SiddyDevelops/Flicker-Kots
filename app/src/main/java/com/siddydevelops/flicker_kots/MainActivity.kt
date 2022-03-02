@@ -8,11 +8,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.content_main.*
 import java.lang.Exception
 
-class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete, GetFlickerJSONData.OnDataAvailable {
+class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete,
+    GetFlickerJSONData.OnDataAvailable, RecyclerItemClickListener.OnRecyclerClickListener  {
 
     companion object {
         private val TAG = "MainActivity"
@@ -25,6 +28,7 @@ class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete, GetFlic
         setContentView(R.layout.activity_main)
 
         recycler_view.layoutManager = LinearLayoutManager(this)
+        recycler_view.addOnItemTouchListener(RecyclerItemClickListener(this,recycler_view,this))
         recycler_view.adapter = flickerRVAdapter
 
         val url = createUri("https://api.flickr.com/services/feeds/photos_public.gne", "android","en-us", true)
@@ -83,6 +87,14 @@ class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete, GetFlic
 
     override fun onError(exception: Exception) {
         Log.d(TAG, "onError called, Exception: ${exception.message}")
+    }
+
+    override fun onItemClick(view: View, position: Int) {
+        Toast.makeText(this, "Normal tap at position $position", Toast.LENGTH_LONG).show()
+    }
+
+    override fun onItemLongClick(view: View, position: Int) {
+        Toast.makeText(this, "Long tap at position $position", Toast.LENGTH_LONG).show()
     }
 
 }
