@@ -27,7 +27,7 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        activateToolbar(true)
+        activateToolbar(false)
 
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.addOnItemTouchListener(RecyclerItemClickListener(this,recycler_view,this))
