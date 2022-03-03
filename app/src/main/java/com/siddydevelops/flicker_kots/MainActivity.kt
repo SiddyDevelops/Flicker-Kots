@@ -1,5 +1,6 @@
 package com.siddydevelops.flicker_kots
 
+import android.content.Intent
 import android.location.Criteria
 import android.net.Uri
 import android.nfc.NdefRecord.createUri
@@ -95,7 +96,13 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete,
     }
 
     override fun onItemLongClick(view: View, position: Int) {
-        Toast.makeText(this, "Long tap at position $position", Toast.LENGTH_LONG).show()
+        //Toast.makeText(this, "Long tap at position $position", Toast.LENGTH_LONG).show()
+        val photo = flickerRVAdapter.getPhoto(position)
+        if(photo != null){
+            val intent = Intent(this, PhotoDetailsActivity::class.java)
+            intent.putExtra(PHOTO_TRANSFER, photo)
+            startActivity(intent)
+        }
     }
 
 }
