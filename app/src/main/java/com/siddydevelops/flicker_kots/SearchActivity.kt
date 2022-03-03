@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.widget.SearchView
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.preference.PreferenceManager
 import com.siddydevelops.flicker_kots.databinding.ActivitySearchBinding
 
 class SearchActivity : BaseActivity() {
@@ -34,7 +35,10 @@ class SearchActivity : BaseActivity() {
         searchView?.isIconified = false
 
         searchView?.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(p0: String?): Boolean {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                val sharedPref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+                sharedPref.edit().putString(FLICKER_QUERY, query).apply()
+                searchView?.clearFocus()
                 finish()
                 return true
             }
@@ -43,6 +47,11 @@ class SearchActivity : BaseActivity() {
                 return false
             }
         })
+
+        searchView?.setOnCloseListener {
+            finish()
+            false
+        }
 
         return true
     }

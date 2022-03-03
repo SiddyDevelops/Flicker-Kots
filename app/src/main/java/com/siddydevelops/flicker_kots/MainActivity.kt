@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -106,6 +107,14 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete,
 
     override fun onResume() {
         super.onResume()
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        val queryResult = sharedPref.getString(FLICKER_QUERY,"")
+        if(queryResult != null && queryResult.isNotEmpty()) {
+            val url = createUri("https://api.flickr.com/services/feeds/photos_public.gne",
+                queryResult,"en-us", true)
+            val getRawData = GetRawData(this)
+            getRawData.execute(url)
+        }
     }
 
 }

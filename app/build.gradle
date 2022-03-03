@@ -48,4 +48,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+    //PreferenceManager
+    implementation 'androidx.preference:preference:1.2.0'
 }
