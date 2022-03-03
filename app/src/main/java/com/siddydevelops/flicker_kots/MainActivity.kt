@@ -1,10 +1,7 @@
 package com.siddydevelops.flicker_kots
 
 import android.content.Intent
-import android.location.Criteria
 import android.net.Uri
-import android.nfc.NdefRecord.createUri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -13,7 +10,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.content_main.*
-import java.lang.Exception
 
 class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete,
     GetFlickerJSONData.OnDataAvailable, RecyclerItemClickListener.OnRecyclerClickListener  {
@@ -66,7 +62,10 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete,
         // as you specify a parent activity in AndroidManifest.xml.
         Log.d(TAG, "onOptionsItemSelected called")
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_search -> {
+                startActivity(Intent(this, SearchActivity::class.java))
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
