@@ -9,7 +9,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.siddydevelops.flicker_kots.databinding.ActivityPhotoDetailsBinding
 
-class PhotoDetailsActivity : AppCompatActivity() {
+class PhotoDetailsActivity : BaseActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityPhotoDetailsBinding
@@ -19,8 +19,7 @@ class PhotoDetailsActivity : AppCompatActivity() {
 
         binding = ActivityPhotoDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        setSupportActionBar(binding.toolbar)
+        activateToolbar(true)
 
     }
 }

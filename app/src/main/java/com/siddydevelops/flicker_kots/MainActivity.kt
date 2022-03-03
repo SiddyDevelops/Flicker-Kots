@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.content_main.*
 import java.lang.Exception
 
-class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete,
+class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete,
     GetFlickerJSONData.OnDataAvailable, RecyclerItemClickListener.OnRecyclerClickListener  {
 
     companion object {
@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        activateToolbar(true)
 
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.addOnItemTouchListener(RecyclerItemClickListener(this,recycler_view,this))
