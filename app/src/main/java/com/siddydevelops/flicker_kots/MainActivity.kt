@@ -104,4 +104,8 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete,
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
+
 }
