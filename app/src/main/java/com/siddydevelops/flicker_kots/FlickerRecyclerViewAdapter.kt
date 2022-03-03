@@ -1,6 +1,5 @@
 package com.siddydevelops.flicker_kots
 
-import android.icu.number.NumberFormatter.with
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,13 +23,21 @@ class FlickerRecyclerViewAdapter(private var photoList : List<Photo>) : Recycler
     }
 
     override fun onBindViewHolder(holder: FlickerImageViewHolder, position: Int) {
-        val photoItem = photoList[position]
-        Picasso.get().load(photoItem.image).error(R.drawable.baseline_image_black_48dp).placeholder(R.drawable.baseline_image_black_48dp).into(holder.thumbnail)
-        holder.title.text = photoItem.title
+        if(photoList.isEmpty()) {
+            holder.thumbnail.setImageResource(R.drawable.baseline_image_black_48dp)
+            holder.title.text = "No photos match your search.\n\nUse the search icon to search for photos."
+        } else {
+            val photoItem = photoList[position]
+            Picasso.get().load(photoItem.image)
+                .error(R.drawable.baseline_image_black_48dp)
+                .placeholder(R.drawable.baseline_image_black_48dp)
+                .into(holder.thumbnail)
+            holder.title.text = photoItem.title
+        }
     }
 
     override fun getItemCount(): Int {
-        return if(photoList.isNotEmpty()) photoList.size else 0
+        return if(photoList.isNotEmpty()) photoList.size else 1
     }
 
     fun loadNewData(newPhotos:List<Photo>) {
